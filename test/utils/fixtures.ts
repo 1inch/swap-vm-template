@@ -10,6 +10,7 @@ import { AquaAMM } from '../../typechain-types/contracts/AquaAMM';
 import { AquaSwapVMRouter } from '../../typechain-types/@1inch/swap-vm/src/routers/AquaSwapVMRouter';
 import { MockTaker } from '../../typechain-types/contracts/MockTaker';
 import { TokenMock } from '../../typechain-types/@1inch/solidity-utils/contracts/mocks/TokenMock';
+import { WETHMock } from '../../typechain-types/@1inch/swap-vm/test/mocks/WETHMock';
 
 const { ethers } = require('hardhat');
 
@@ -25,8 +26,18 @@ async function deployFixture() {
   const aquaAMM = await deployContract("AquaAMM", [await aqua.getAddress()]) as unknown as AquaAMM;
 
   console.log("AquaAMM deployed at:", await aquaAMM.getAddress());
+  // Deploy WETH mock (required by the router for unwrapping support)
+  const weth = await deployContract("WETHMock") as unknown as WETHMock;
+
+  console.log("WETHMock deployed at:", await weth.getAddress());
   // Deploy AquaSwapVMRouter
-  const swapVM = await deployContract("AquaSwapVMRouter", [await aqua.getAddress(), "AquaSwapVM", "1.0.0"]) as unknown as AquaSwapVMRouter;
+  const swapVM = await deployContract("AquaSwapVMRouter", [
+    await aqua.getAddress(),
+    await weth.getAddress(),
+    await owner.getAddress(),
+    "AquaSwapVM",
+    "1.0.0"
+  ]) as unknown as AquaSwapVMRouter;
 
   console.log("AquaSwapVMRouter deployed at:", await swapVM.getAddress());
   // Deploy MockTaker
@@ -34,13 +45,17 @@ async function deployFixture() {
 
   console.log("MockTaker deployed at:", await mockTaker.getAddress());
   // Deploy mock tokens using TokenMock from solidity-utils
-  const token0 = await deployContract("TokenMock", ["Token 0", "TK0"]) as unknown as TokenMock;
-  const token1 = await deployContract("TokenMock", ["Token 1", "TK1"]) as unknown as TokenMock;
+  // Orders require the pair to be sorted by address (tokenA < tokenB)
+  let tokenA = await deployContract("TokenMock", ["Token A", "TKA"]) as unknown as TokenMock;
+  let tokenB = await deployContract("TokenMock", ["Token B", "TKB"]) as unknown as TokenMock;
+  if ((await tokenA.getAddress()).toLowerCase() > (await tokenB.getAddress()).toLowerCase()) {
+    [tokenA, tokenB] = [tokenB, tokenA];
+  }
 
   return {
     accounts: { owner, maker, taker, feeReceiver },
-    tokens: { token0, token1 },
-    contracts: { aqua, aquaAMM, swapVM, mockTaker }
+    tokens: { tokenA, tokenB },
+    contracts: { aqua, aquaAMM, swapVM, mockTaker, weth }
   };
 }
 

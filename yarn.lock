@@ -2,18 +2,18 @@
 # yarn lockfile v1
 
 
-"@1inch/aqua@github:1inch/aqua#0.0.7":
-  version "0.0.6"
-  resolved "https://codeload.github.com/1inch/aqua/tar.gz/ec7e8cf8cb2ba1131b670848d4757cd528014e80"
+"@1inch/aqua@github:1inch/aqua#0.1.0", "@1inch/aqua@https://github.com/1inch/aqua#6f05aa1ac2dcf701b0e086ad5e7606515f1fa454":
+  version "0.1.0"
+  resolved "https://github.com/1inch/aqua#6f05aa1ac2dcf701b0e086ad5e7606515f1fa454"
   dependencies:
-    "@1inch/solidity-utils" "6.8.0"
+    "@1inch/solidity-utils" "6.9.7"
     "@openzeppelin/contracts" "5.4.0"
     forge-std "github:foundry-rs/forge-std#v1.11.0"
 
-"@1inch/solidity-utils@6.8.0", "@1inch/solidity-utils@^6.8.0":
-  version "6.8.0"
-  resolved "https://registry.yarnpkg.com/@1inch/solidity-utils/-/solidity-utils-6.8.0.tgz#05d6c0c0a527b770d851e3dd08a61ba005ffdcd7"
-  integrity sha512-kP6Vv5/b1JnEZEWWugcyhaMFh0Ib98q37Ua/9ueEjWd7e33ECh3idPklPk+jVu6Fh7qsncFwGd76kXSOnlAR2w==
+"@1inch/solidity-utils@6.9.7":
+  version "6.9.7"
+  resolved "https://registry.yarnpkg.com/@1inch/solidity-utils/-/solidity-utils-6.9.7.tgz#788660e358da4c753a0aa8e617513c5a64579027"
+  integrity sha512-2vKx7+EGw+IS/UoyHW3+9d0TPb+F+018KEJ9sQVqMy9Xd3Q3VxypdSYklUgYF9YmrjNxRtCPTRll28sFEeqNiQ==
   dependencies:
     "@metamask/eth-sig-util" "8.0.0"
     "@nomicfoundation/hardhat-ethers" "3.0.8"
@@ -30,12 +30,12 @@
     mocha-chai-jest-snapshot "1.1.6"
     node-fetch "2.7.0"
 
-"@1inch/swap-vm@https://github.com/1inch/swap-vm#0.0.4":
-  version "0.0.2"
-  resolved "https://github.com/1inch/swap-vm#1d82046cc309cf66ba688aee9e600a6b293ce6cf"
+"@1inch/swap-vm@https://github.com/1inch/swap-vm#b44977a1c7744c9caa6b7974d9b638ed4983cfd3":
+  version "0.0.6"
+  resolved "https://github.com/1inch/swap-vm#b44977a1c7744c9caa6b7974d9b638ed4983cfd3"
   dependencies:
-    "@1inch/aqua" "github:1inch/aqua#0.0.7"
-    "@1inch/solidity-utils" "6.8.0"
+    "@1inch/aqua" "github:1inch/aqua#0.1.0"
+    "@1inch/solidity-utils" "6.9.7"
     "@openzeppelin/contracts" "5.4.0"
     forge-std "github:foundry-rs/forge-std#v1.11.0"
 
@@ -1502,12 +1502,7 @@
     "@nomicfoundation/solidity-analyzer-linux-x64-musl" "0.1.2"
     "@nomicfoundation/solidity-analyzer-win32-x64-msvc" "0.1.2"
 
-"@openzeppelin/contracts@5.1.0":
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-5.1.0.tgz#4e61162f2a2bf414c4e10c45eca98ce5f1aadbd4"
-  integrity sha512-p1ULhl7BXzjjbha5aqst+QMLY+4/LCWADXOCsmLHRM77AqiPjnd9vvUN9sosUfhL9JGKpZ0TjEGxgvnizmWGSA==
-
-"@openzeppelin/contracts@5.4.0", "@openzeppelin/contracts@^5.4.0":
+"@openzeppelin/contracts@5.1.0", "@openzeppelin/contracts@5.4.0":
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-5.4.0.tgz#177594bdb2d86c71f5d1052fe40cb4edb95fb20f"
   integrity sha512-eCYgWnLg6WO+X52I16TZt8uEjbtdkgLC0SUX/xnAksjjrQI4Xfn4iBRoI5j55dmlOhDv1Y7BoR3cU7e3WWhC6A==

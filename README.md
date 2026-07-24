@@ -74,9 +74,10 @@ yarn deploy sepolia
 The deployment script will:
 1. Deploy Aqua protocol
 2. Deploy AquaAMM strategy
-3. Deploy AquaSwapVMRouter
-4. Deploy MockTaker (optional, for testing)
-5. Verify all contracts on Etherscan (for non-local networks)
+3. Resolve WETH (deploys a WETHMock on local networks; uses the canonical address or `WETH_ADDRESS` env on live networks)
+4. Deploy AquaSwapVMRouter
+5. Deploy MockTaker (optional, for testing)
+6. Verify all contracts on Etherscan (for non-local networks)
 
 ## Usage Examples
 
@@ -85,25 +86,30 @@ The deployment script will:
 ```typescript
 const order = await aquaAMM.buildProgram(
   makerAddress,        // Liquidity provider
-  token0Address,       // First token address
-  token1Address,       // Second token address
-  feeBpsIn,           // Trading fee in basis points
-  delta0,             // Concentration parameter for token0
-  delta1,             // Concentration parameter for token1
-  decayPeriod,        // Price decay period
-  protocolFeeBpsIn,   // Protocol fee in basis points
-  feeReceiverAddress, // Fee receiver address
-  salt                // Unique order identifier
+  tokenAAddress,       // First token of the pair (sorted automatically)
+  tokenBAddress,       // Second token of the pair (sorted automatically)
+  feeBpsIn,            // Trading fee on input amount in bps (1e9 = 100%)
+  sqrtPriceMin,        // sqrt(P_min) in 1e18 fixed-point (0 = full range)
+  sqrtPriceMax,        // sqrt(P_max) in 1e18 fixed-point (0 = full range)
+  decayPeriod,         // Price decay period in seconds
+  protocolFeeBpsIn,    // Protocol fee on input amount in bps (1e9 = 100%)
+  feeReceiverAddress,  // Protocol fee receiver address
+  salt,                // Unique order identifier
+  deadline             // Order expiration timestamp (0 = no deadline)
 );
 ```
 
 ### Executing a Swap
+
+The token pair is embedded in the order (`tokenA` < `tokenB` by address); the taker
+selects the swap direction with the `isAToB` flag:
 
 ```typescript
 // Build taker traits
 const takerData = TakerTraitsLib.build({
   taker: takerAddress,
   isExactIn: true,
+  isAToB: true,               // true: tokenA -> tokenB, false: tokenB -> tokenA
   threshold: minOutputAmount,
   useTransferFromAndAquaPush: true
 });
@@ -111,8 +117,6 @@ const takerData = TakerTraitsLib.build({
 // Execute swap
 await swapVM.swap(
   order,
-  tokenIn,
-  tokenOut,
   amountIn,
   takerData
 );

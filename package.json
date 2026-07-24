@@ -13,9 +13,10 @@
     "clean": "rimraf artifacts cache coverage contracts/hardhat-dependency-compiler deployments typechain-types"
   },
   "dependencies": {
-    "@1inch/solidity-utils": "^6.8.0",
-    "@1inch/swap-vm": "https://github.com/1inch/swap-vm#0.0.4",
-    "@openzeppelin/contracts": "^5.4.0"
+    "@1inch/aqua": "https://github.com/1inch/aqua#6f05aa1ac2dcf701b0e086ad5e7606515f1fa454",
+    "@1inch/solidity-utils": "6.9.7",
+    "@1inch/swap-vm": "https://github.com/1inch/swap-vm#b44977a1c7744c9caa6b7974d9b638ed4983cfd3",
+    "@openzeppelin/contracts": "5.4.0"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",
@@ -41,6 +42,9 @@
     "typescript": "^5.9.3"
   },
   "resolutions":{
-    "elliptic": "6.6.1"
+    "elliptic": "6.6.1",
+    "@1inch/aqua": "https://github.com/1inch/aqua#6f05aa1ac2dcf701b0e086ad5e7606515f1fa454",
+    "@1inch/solidity-utils": "6.9.7",
+    "@openzeppelin/contracts": "5.4.0"
   }
 }
